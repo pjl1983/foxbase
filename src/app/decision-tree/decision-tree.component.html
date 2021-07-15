@@ -1,0 +1,41 @@
+<nav class="navbar navbar-dark bg-dark">
+  <h2 class=" mx-3">What should you order to eat?</h2>
+  <a *ngIf="question" class="btn btn-secondary m-3 d-flex flex-column align-items-center"
+     [routerLink]="[question.previous]" routerLinkActive="active" role="button">Go Back</a>
+</nav>
+
+<div class="container mt-5" *ngIf="question">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-center">
+      <h3 class="m-3">{{question.text}}</h3>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <ng-container *ngIf="question.inputType === inputTypeEnum.BUTTON">
+      <ng-container *ngFor="let option of question.options">
+        <div class="col-12 d-flex justify-content-center"
+             [ngClass]="{'col-sm-6': question.options && question.options.length <= 3, 'col-sm-4': question.options && question.options.length >= 3}">
+          <a class="btn btn-outline-primary m-3 text-uppercase" [routerLink]="option.route" routerLinkActive="active"
+             role="button">{{option.answer}}</a>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="question.inputType === inputTypeEnum.RADIO">
+      <div class="d-flex justify-content-center">
+        <ng-container *ngFor="let option of question.options">
+          <div class="form-check radio-button m-3">
+            <input [routerLink]="option.route" class="form-check-input" type="radio" name="flexRadioDefault"
+                   id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              &nbsp;{{option.answer}}
+            </label>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <div class="row mt-3 flex justify-content-center" *ngIf="question.image">
+    <img class="image" [src]="question.image" alt="">
+  </div>
+</div>
